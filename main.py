@@ -8,6 +8,8 @@ import random
 
 today = datetime.now()
 start_date = os.environ['START_DATE']
+meet_date = os.environ['MEET_DAY']
+vx_date = os.environ['VX_DAY']
 city = os.environ['CITY']
 birthday = os.environ['BIRTHDAY']
 
@@ -26,6 +28,14 @@ def get_weather():
 
 def get_count():
   delta = today - datetime.strptime(start_date, "%Y-%m-%d")
+  return delta.days
+
+def get_count2():
+  delta = today - datetime.strptime(meet_date, "%Y-%m-%d")
+  return delta.days
+
+def get_count3():
+  delta = today - datetime.strptime(vx_date, "%Y-%m-%d")
   return delta.days
 
 def get_birthday():
@@ -48,6 +58,6 @@ client = WeChatClient(app_id, app_secret)
 
 wm = WeChatMessage(client)
 wea, temperature = get_weather()
-data = {"weather":{"value":wea},"temperature":{"value":temperature},"love_days":{"value":get_count()},"birthday_left":{"value":get_birthday()},"words":{"value":get_words(), "color":get_random_color()}}
+data = {"weather":{"value":wea},"temperature":{"value":temperature},"love_days":{"value":get_count()},"meet_days":{"value":get_count2()},"vx_days":{"value":get_count3()},"birthday_left":{"value":get_birthday()},"words":{"value":get_words(), "color":get_random_color()}}
 res = wm.send_template(user_id, template_id, data)
 print(res)
