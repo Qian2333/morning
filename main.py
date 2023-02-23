@@ -23,7 +23,7 @@ template_id = os.environ["TEMPLATE_ID"]
 def get_weather():
   url = "https://www.yiketianqi.com/free/day?appid=97585415&appsecret=2hk70GRk&city=%E6%88%90%E9%83%BD"
   res = requests.get(url).json()
-  return res['wea'], math.floor(res['tem'])
+  return res['wea'], math.floor(float(res['tem']))
 
 def get_count():
   delta = today - datetime.strptime(start_date, "%Y-%m-%d")
